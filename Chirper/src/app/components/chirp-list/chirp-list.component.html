@@ -1,0 +1,23 @@
+<div class="row py-4 bg-white border" *ngIf="chirpList ;else no_chirps">
+  <ng-container *ngFor="let chirp of chirpList">
+    <div class="col-1">
+      <img class="avatar" src={{chirp.user.photoURL}} alt="{{chirp.user.userName}} + avatar" />
+    </div>
+    <div class="col pl-4 pl-lg-1">
+      <span class="handle">{{chirp.userName}}</span>
+      <span class="time">{{chirp.timeFromNow}}</span>
+      <div class="chirp">{{chirp.text}}</div>
+
+      <!-- A section for showing chirp likes -->
+      <div class="likes">          
+        <i class="fa fa-heart" aria-label="like" ></i>
+        <span>{{likeCount}}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<ng-template #no_chirps>
+    <div class="row">
+      <p>No chirps yet, please add one!</p>
+    </div>
+</ng-template>
