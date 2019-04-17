@@ -1,13 +1,16 @@
 export class User {
-    public username: string;
-    public displayName: string;
-    public photoURL: string;
+
+    uid: string;
+    email: string;
+    photoURL?: string;
+    displayName?: string;
+    myCustomData?: string;
 
     constructor(
-        username, 
+        uid, 
         displayName, 
         photoURL = "/assets/img/no-user-pic.png") { // Default value if no avatar
-            this.username = username;
+            this.uid = uid;
             this.displayName = displayName;
             this.photoURL = photoURL;
     }

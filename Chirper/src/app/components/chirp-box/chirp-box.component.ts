@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -22,12 +22,17 @@ export class ChirpBoxComponent implements OnInit {
 
   createForm() {
     this.chirpForm = this.fb.group({
-      text: []
+      text: [null, [Validators.required, Validators.maxLength(140)] ]
     });
   }
 
   postChirp() {
     /* TODO: add a new Chirp to the database */
+  }
+
+  lengthIsInvalid(){
+    return this.chirpForm.get('text').invalid && this.chirpForm.get('text').value.length > 0 &&
+    (this.chirpForm.get('text').dirty || this.chirpForm.get('text').touched);
   }
 
 }

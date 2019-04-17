@@ -14,9 +14,11 @@ export class ChirpPageComponent implements OnInit {
   public loggedInUser: User;
   public chirps: Chirp[];
 
-  constructor(chirpService: ChirpService) { 
-    this.loggedInUser = UserService.getUser();
-    this.chirps = chirpService.getChirps(this.loggedInUser.username);
+  constructor(chirpService: ChirpService, userService: UserService) { 
+    userService.user$.subscribe( user => {
+      this.loggedInUser = user;
+      this.chirps = chirpService.getChirps(this.loggedInUser.email);
+    });
   }
 
   ngOnInit() {

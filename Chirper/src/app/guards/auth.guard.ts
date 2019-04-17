@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
-})
-  export class AuthGuard implements CanActivate {
-    constructor(private userStore: UserService,
-      private router: Router) {}
+import { UserService} from '../services/user.service'
+import { Observable } from 'rxjs';
+import { tap, map, take } from 'rxjs/operators';
 
-  canActivate(): boolean {
-    console.log('AuthGuard#canActivate called');
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(private userService: UserService, private router: Router) {}
 
-    if (this.userStore.isLoggedIn()) { return true };
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
-    console.log('AuthGuard#canActivate not authorized to access page');
-    // Can store current route and redirect back to it
-    // Store it in a service, add it to a query param
-    this.router.navigate(['login']);
-
-    return false;
+      return this.userService.user$.pipe(
+           take(1),
+           map(user => !!user), // <-- map to boolean
+           tap(loggedIn => {
+             if (!loggedIn) {
+               console.log('access denied');
+               this.router.navigate(['/login']);
+             }
+         })
+    )
   }
 }

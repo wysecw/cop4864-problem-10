@@ -5,15 +5,21 @@
     </div>
     <div class="col pl-4 pl-lg-1">
       <form [formGroup]="chirpForm" (ngSubmit)="onSubmit()">
-        <textarea name="text" class="form-control mb-2" placeholder="What's Happening...?" [formControl]="postTextControl" ></textarea>
+        <textarea 
+          name="text" 
+          class="form-control mb-2" 
+          placeholder="What's Happening...?" 
+          formControlName="text" ></textarea>
 
         <!-- Only show this if the post length is > 140 -->
-        <small class="form-text">140 character limit!</small>
+        <small class="form-text" *ngIf="lengthIsInvalid()">
+          140 character limit!
+        </small>
         
         <div class="text-right">
 
           <!-- Disable if invalid post length -->
-          <button class="btn btn-primary" ng-attr-disabld="post.length === 0 || post.length > 140">
+          <button class="btn btn-primary" [disabled]="lengthIsInvalid()">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Share
           </button> 					
         </div>

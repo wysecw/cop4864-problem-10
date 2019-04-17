@@ -11,7 +11,14 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 // Pages
 import { ChirpPageComponent } from './pages/chirp-page/chirp-page.component';
-import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -21,14 +28,17 @@ import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component
     ChirpListComponent,
     WelcomeHeaderComponent,
     ChirpPageComponent,
-    SignUpPageComponent
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
