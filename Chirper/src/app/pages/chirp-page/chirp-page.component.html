@@ -1,5 +1,5 @@
 <div class="container" *ngIf="userService.user$ | async as user">
   <h1>Post a Chirp</h1>
   <app-chirp-box [user]="user"></app-chirp-box>
-  <app-chirp-list [user]="user" [chirpList]="chirps"></app-chirp-list>
+  <app-chirp-list [chirpList]="chirps"></app-chirp-list>
 </div>

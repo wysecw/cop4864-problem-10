@@ -29,7 +29,7 @@ export class ChirpService {
    */
   public postChirp(chirp: Chirp): void {
     this.afs.collection('chirps').add({ // Break down the chirp to a JS object to save
-      uid:  chirp.uid,
+      user:  chirp.user,
       time: chirp.time,
       text: chirp.text
     });

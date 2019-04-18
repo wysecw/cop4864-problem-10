@@ -1,12 +1,12 @@
 import * as moment from 'moment';
 
 export class Chirp {
-    public uid: string;
+    public user: object;
     public text: string;
     public time: string;
 
     constructor(chirpObj) {
-        this.uid = chirpObj.uid;
+        this.user = chirpObj.user;
         this.text = chirpObj.text;
         this.time = chirpObj.date || new Date().toISOString()
     }

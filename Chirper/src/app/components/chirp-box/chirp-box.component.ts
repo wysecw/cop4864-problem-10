@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Chirp } from 'src/app/models/chirp';
 import { ChirpService } from 'src/app/services/chirp.service';
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class ChirpBoxComponent implements OnInit {
   onSubmit() {
     console.log(this.chirpForm.get('text').value);
     this.chirpService.postChirp(new Chirp({
-        uid: this.user.uid,
+        user: this.user,
         text: this.chirpForm.get('text').value
       })
     );

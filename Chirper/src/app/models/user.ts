@@ -1,8 +1,23 @@
-interface User {
+export class User {
 
     uid: string;
     email: string;
     photoURL?: string;
     displayName?: string;
-    myCustomData?: string;
+
+    constructor(userObj) {
+        this.uid = userObj.uid;
+        this.email = userObj.email;
+        this.photoURL = userObj.photoURL;
+        this.displayName = userObj.displayName;
+    }
+
+    toObject(): object {
+        return {
+            uid: this.uid,
+            email: this.email,
+            photoURL: this.photoURL,
+            displayName: this.displayName
+        };
+    }
 }
