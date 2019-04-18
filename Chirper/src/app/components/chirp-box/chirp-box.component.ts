@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User } from 'src/app/models/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Chirp } from 'src/app/models/chirp';
+import { ChirpService } from 'src/app/services/chirp.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ChirpBoxComponent implements OnInit {
   public chirpForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private chirpService: ChirpService) {
     this.createForm();
    }
 
@@ -26,12 +27,23 @@ export class ChirpBoxComponent implements OnInit {
     });
   }
 
-  postChirp() {
-    /* TODO: add a new Chirp to the database */
+  /**
+   * When form is submitted, builds a new chirp object and stores it
+   */
+  onSubmit() {
+    console.log(this.chirpForm.get('text').value);
+    this.chirpService.postChirp(new Chirp({
+        uid: this.user.uid,
+        text: this.chirpForm.get('text').value
+      })
+    );
   }
 
+  /**
+   * Helps us validate the form field
+   */
   lengthIsInvalid(){
-    return this.chirpForm.get('text').invalid && this.chirpForm.get('text').value.length > 0 &&
+    return this.chirpForm.get('text').invalid &&
     (this.chirpForm.get('text').dirty || this.chirpForm.get('text').touched);
   }
 

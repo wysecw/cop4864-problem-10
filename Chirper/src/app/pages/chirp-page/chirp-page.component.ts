@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Chirp } from 'src/app/models/chirp';
-import { User } from 'src/app/models/user';
 import { ChirpService } from 'src/app/services/chirp.service';
 import { UserService } from 'src/app/services/user.service';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chirp-page',
@@ -11,17 +11,19 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChirpPageComponent implements OnInit {
 
-  public loggedInUser: User;
   public chirps: Chirp[];
 
-  constructor(chirpService: ChirpService, userService: UserService) { 
-    userService.user$.subscribe( user => {
-      this.loggedInUser = user;
-      this.chirps = chirpService.getChirps(this.loggedInUser.email);
-    });
-  }
+  constructor(private chirpService: ChirpService, private userService: UserService) { }
 
   ngOnInit() {
+    // Get the user who is logged in, then get that person's chirps
+    this.userService.user$.subscribe( user => {
+      // Will subscribe to changes in the database and map each result set to a new
+      // array of chirp objects
+      this.chirpService.getChirps(user.uid).subscribe( chirps => {
+        this.chirps = chirps.map( chirpObj => new Chirp(chirpObj) )
+      })
+    });
   }
 
 }

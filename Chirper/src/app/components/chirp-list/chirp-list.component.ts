@@ -7,7 +7,7 @@ import { Chirp } from 'src/app/models/chirp';
   styleUrls: ['./chirp-list.component.css']
 })
 export class ChirpListComponent implements OnInit {
-
+  @Input() user: User;
   @Input() chirpList: Chirp[];
 
   constructor() { }
