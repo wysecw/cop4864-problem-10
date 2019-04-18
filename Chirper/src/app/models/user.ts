@@ -11,13 +11,4 @@ export class User {
         this.photoURL = userObj.photoURL;
         this.displayName = userObj.displayName;
     }
-
-    toObject(): object {
-        return {
-            uid: this.uid,
-            email: this.email,
-            photoURL: this.photoURL,
-            displayName: this.displayName
-        };
-    }
 }

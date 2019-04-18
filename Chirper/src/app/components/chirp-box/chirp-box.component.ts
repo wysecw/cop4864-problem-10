@@ -32,7 +32,6 @@ export class ChirpBoxComponent implements OnInit {
    * When form is submitted, builds a new chirp object and stores it
    */
   onSubmit() {
-    console.log(this.chirpForm.get('text').value);
     this.chirpService.postChirp(new Chirp({
         user: this.user,
         text: this.chirpForm.get('text').value

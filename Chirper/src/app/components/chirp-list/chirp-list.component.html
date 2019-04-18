@@ -1,10 +1,10 @@
 <div class="row py-4 bg-white border" *ngIf="chirpList ;else no_chirps">
   <ng-container *ngFor="let chirp of chirpList">
-    <div class="col-1">
+    <div class="col-2">
       <img class="avatar" src={{chirp.user.photoURL}} alt="{{chirp.user.displayName}} + avatar" />
     </div>
-    <div class="col pl-4 pl-lg-1">
-      <span class="handle">{{chirp.user.uid}}</span>
+    <div class="col-10">
+      <span class="handle">{{chirp.user.displayName}}</span>
       <span class="time">{{chirp.timeFromNow}}</span>
       <div class="chirp">{{chirp.text}}</div>
 

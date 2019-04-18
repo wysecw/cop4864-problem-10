@@ -20,9 +20,7 @@ export class ChirpPageComponent implements OnInit {
     this.userService.user$.subscribe( user => {
       // Will subscribe to changes in the database and map each result set to a new
       // array of chirp objects
-      this.chirpService.getChirps(user.uid).subscribe( chirps => {
-        this.chirps = chirps.map( chirpObj => new Chirp(chirpObj) )
-      })
+      this.chirpService.getChirpsByUid(user.uid).subscribe( chirps => this.chirps = chirps )
     });
   }
 

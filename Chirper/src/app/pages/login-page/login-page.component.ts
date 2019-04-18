@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { ChirpService } from 'src/app/services/chirp.service';
+import { Chirp } from 'src/app/models/chirp';
 
 @Component({
   selector: 'app-login-page',
@@ -11,8 +13,11 @@ import { Observable, Subscription } from 'rxjs';
 export class LoginPageComponent implements OnInit {
 
   private userSubscription: Subscription;
+  private chirpSubscription: Subscription;
 
-  constructor(private userService: UserService, private router: Router) { 
+  public allChirps: Chirp[] = [];
+
+  constructor(private userService: UserService, private chirpService: ChirpService, private router: Router) { 
   }
 
   ngOnInit() {
@@ -22,10 +27,14 @@ export class LoginPageComponent implements OnInit {
         this.router.navigate(['chirp']);
       }
     });
+
+    // Subscribe to ALL chirps in the system and show them on this login page
+    this.chirpSubscription = this.chirpService.getAllChirps().subscribe( chirps => this.allChirps = chirps);
   }
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
+    this.chirpSubscription.unsubscribe();
   }
 
 }

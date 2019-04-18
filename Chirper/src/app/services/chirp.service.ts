@@ -3,7 +3,7 @@ import { Chirp } from '../models/chirp';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
-import { tap, switchMap } from 'rxjs/operators';
+import { tap, switchMap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +17,21 @@ export class ChirpService {
    * @param uid The username of the person
    * @returns An observable of object arrays
    */
-  public getChirps(uid: string): Observable<{}[]> {
+  public getChirpsByUid(uid: string): Observable<Chirp[]> {
     return this.afs
-      .collection('chirps', ref => ref.where('uid', '==', uid))
-      .valueChanges();
+      .collection('chirps', ref => ref.where('user.uid', '==', uid))
+      .valueChanges().pipe(
+        map( chirps => chirps.map( chirpObj => new Chirp(chirpObj) ))
+      );
+  }
+
+  /** Gets all chirps in the system */
+  public getAllChirps(): Observable<Chirp[]> {
+    return this.afs
+      .collection('chirps')
+      .valueChanges().pipe(
+        map( chirps => chirps.map( chirpObj => new Chirp(chirpObj) ))
+      );
   }
 
   /**
